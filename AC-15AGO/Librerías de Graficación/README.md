@@ -1,5 +1,5 @@
 1. Sistemas de Coordenadas
-2. 
+   
 El concepto de sistemas de coordenadas es fundamental en la graficación de figuras geométricas en la web.
 
 Canvas (Sistema de Coordenadas de Píxeles)
@@ -9,3 +9,10 @@ Canvas (Sistema de Coordenadas de Píxeles)
 SVG (Sistema de Coordenadas Vectoriales)
   <svg> también utiliza un sistema de coordenadas similar al canvas, pero más orientado a gráficos vectoriales. En SVG, las figuras se dibujan utilizando coordenadas relativas al área de dibujo, donde (0,0) también está en la esquina superior izquierda.
   La función drawOnSVG() maneja la creación de elementos gráficos
+
+2. Librerías de Graficación
+Aunque el código no utiliza librerías de graficación externas (como D3.js, Three.js, etc.), utiliza las APIs nativas de HTML5 para la graficación:
+
+Canvas API
+  El código utiliza la Canvas API, que es una librería de graficación incorporada en HTML5. Esta API permite dibujar directamente en un elemento <canvas>, utilizando JavaScript para controlar los gráficos de forma procedural.
+  En drawOnCanvas(), se usan métodos de la Canvas API, como fillRect() para dibujar un rectángulo o beginPath() y arc() para dibujar un círculo.
