@@ -20,3 +20,8 @@ Canvas API
 SVG (Scalable Vector Graphics)
    El código también utiliza SVG, que es una tecnología nativa de HTML para crear gráficos vectoriales escalables. A diferencia del canvas, SVG permite la manipulación de gráficos mediante el DOM (Document Object Model), lo que significa que los elementos gráficos (como rect, circle, polygon) son directamente accesibles y manipulables en el código HTML y CSS.
    En drawOnSVG(), se crean y configuran elementos SVG como <rect>, <circle>, y <polygon>, usando métodos como setAttribute() para definir sus propiedades (posición, tamaño, colores).
+
+Relación y Aplicación
+   Sistemas de Coordenadas: Ambos métodos de graficación, tanto canvas como svg, dependen de sistemas de coordenadas para determinar dónde se dibujan las figuras en la pantalla. Entender cómo funcionan estos sistemas es clave para posicionar correctamente los elementos gráficos.
+
+   Librerías de Graficación: Aunque no se usan librerías externas, el código aprovecha al máximo las capacidades nativas de HTML5 (Canvas API y SVG). Estas herramientas son poderosas para la creación de gráficos en la web, y son esenciales para cualquier desarrollador que quiera dibujar gráficos sin depender de librerías adicionales.
