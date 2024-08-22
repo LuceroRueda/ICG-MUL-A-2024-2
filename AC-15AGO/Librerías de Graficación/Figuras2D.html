@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graficador de Figuras Geométricas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .control-panel, .canvas-panel {
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        #rasterCanvas, #vectorSvg {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Graficador de Figuras Geométricas</h1>
+
+    <!-- Panel de controles -->
+    <div class="control-panel">
+        <h2>Opciones de Figura</h2>
+        <label for="shapeType">Selecciona la figura:</label>
+        <select id="shapeType">
+            <option value="rectangle">Rectángulo</option>
+            <option value="circle">Círculo</option>
+            <option value="triangle">Triángulo</option>
+        </select>
+
+        <h2>Tamaño</h2>
+        <label for="width">Ancho / Radio:</label>
+        <input type="number" id="width" value="100" min="10">
+        
+        <label for="height">Alto (para rectángulo y triángulo):</label>
+        <input type="number" id="height" value="100" min="10">
+
+        <h2>Colores</h2>
+        <label for="fillColor">Color de relleno:</label>
+        <input type="color" id="fillColor" value="#FF0000">
+        
+        <label for="lineColor">Color de línea:</label>
+        <input type="color" id="lineColor" value="#000000">
+
+        <h2>Posición</h2>
+        <label for="xPos">Posición X:</label>
+        <input type="number" id="xPos" value="50" min="0" max="500">
+
+        <label for="yPos">Posición Y:</label>
+        <input type="number" id="yPos" value="50" min="0" max="500">
+
+        <h2>Tipo de Gráfico</h2>
+        <label for="graphicType">Rasterizado o Vectorizado:</label>
+        <select id="graphicType">
+            <option value="raster">Rasterizado (Canvas)</option>
+            <option value="vector">Vectorizado (SVG)</option>
+        </select>
+
+        <h2>Acciones</h2>
+        <button id="drawButton">Graficar</button>
+        <button id="clearButton">Borrar</button>
+    </div>
+
+    <!-- Paneles de gráficos -->
+    <div class="container">
+        <div class="canvas-panel">
+            <h2>Canvas Rasterizado</h2>
+            <canvas id="rasterCanvas" width="500" height="500"></canvas>
+        </div>
+        <div class="canvas-panel">
+            <h2>SVG Vectorizado</h2>
+            <svg id="vectorSvg" width="500" height="500"></svg>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
