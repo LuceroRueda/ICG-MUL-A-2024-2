@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trazado de Polígonos Regulares</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .control-panel, .canvas-panel, .coordinates-panel {
+            width: 80%;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        #rasterCanvas, #vectorSvg {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Trazado de Polígonos Regulares</h1>
+
+    <!-- Panel de controles -->
+    <div class="control-panel">
+        <h2>Configuración del Polígono</h2>
+        
+        <label for="sides">Número de lados:</label>
+        <input type="number" id="sides" value="3" min="3" max="12">
+
+        <label for="sideLength">Dimensión de los lados:</label>
+        <input type="number" id="sideLength" value="100" min="10">
+        
+        <label for="color">Color de la figura:</label>
+        <input type="color" id="color" value="#FF0000">
+
+        <h2>Posición del Polígono</h2>
+        <label for="positionType">Tipo de coordenadas:</label>
+        <select id="positionType">
+            <option value="cartesian">Cartesiana</option>
+            <option value="polar">Polar</option>
+        </select>
+
+        <div id="cartesianInputs">
+            <label for="xPos">Posición X:</label>
+            <input type="number" id="xPos" value="250" min="0" max="500">
+
+            <label for="yPos">Posición Y:</label>
+            <input type="number" id="yPos" value="250" min="0" max="500">
+        </div>
+
+        <div id="polarInputs" style="display: none;">
+            <label for="radius">Radio (r):</label>
+            <input type="number" id="radius" value="250" min="0" max="500">
+
+            <label for="angle">Ángulo (θ en grados):</label>
+            <input type="number" id="angle" value="0" min="0" max="360">
+        </div>
+
+        <h2>Tipo de Gráfico</h2>
+        <label for="graphicType">Rasterizado o Vectorizado:</label>
+        <select id="graphicType">
+            <option value="raster">Rasterizado (Canvas)</option>
+            <option value="vector">Vectorizado (SVG)</option>
+        </select>
+
+        <h2>Acciones</h2>
+        <button id="drawButton">Graficar</button>
+        <button id="clearButton">Borrar</button>
+    </div>
+
+    <!-- Panel de gráficos -->
+    <div class="canvas-panel">
+        <h2>Canvas</h2>
+        <canvas id="rasterCanvas" width="500" height="500"></canvas>
+        <svg id="vectorSvg" width="500" height="500"></svg>
+    </div>
+
+    <!-- Panel de coordenadas -->
+    <div class="coordinates-panel">
+        <h2>Coordenadas</h2>
+        <div id="coordinates"></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
