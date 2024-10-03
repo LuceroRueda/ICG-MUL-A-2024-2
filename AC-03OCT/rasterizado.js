@@ -1,3 +1,6 @@
+let puntosGenerados = []; // Variable global para almacenar los puntos generados
+let centroideGenerado = []; // Variable global para almacenar el centroide
+
 // Función para generar puntos aleatorios
 function generarPuntosAleatorios(minPuntos, maxPuntos) {
     const numPuntos = Math.floor(Math.random() * (maxPuntos - minPuntos + 1)) + minPuntos;
@@ -29,12 +32,14 @@ function ordenarPuntosPorAngulo(puntos, centroide) {
 }
 
 // Algoritmo de Bresenham para líneas
-function algoritmoBresenham(x1, y1, x2, y2, ctx) {
+function algoritmoBresenham(x1, y1, x2, y2, ctx, color) {
     let dx = Math.abs(x2 - x1);
     let dy = Math.abs(y2 - y1);
     let sx = (x1 < x2) ? 1 : -1;
     let sy = (y1 < y2) ? 1 : -1;
     let err = dx - dy;
+
+    ctx.fillStyle = color;
 
     while (true) {
         ctx.fillRect(x1, y1, 1, 1); // Dibuja un píxel
@@ -80,18 +85,27 @@ function dibujarFigura(ctx, puntos) {
     for (let i = 0; i < puntos.length; i++) {
         const [x1, y1] = puntos[i];
         const [x2, y2] = puntos[(i + 1) % puntos.length];
-        algoritmoBresenham(x1, y1, x2, y2, ctx);
+        algoritmoBresenham(x1, y1, x2, y2, ctx, 'black'); // Líneas negras
     }
+
+    // Dibujar los vértices en azul
+    ctx.fillStyle = 'blue';
+    puntos.forEach(([x, y]) => {
+        ctx.fillRect(x - 2, y - 2, 4, 4); // Dibujar un pequeño cuadrado en cada vértice
+    });
 }
 
 // Función para dibujar el centroide y las líneas conectándolo con los vértices
 function dibujarCentroideYLíneas(ctx, centroide, puntos) {
     const [cx, cy] = centroide;
-    ctx.fillRect(cx, cy, 3, 3); // Dibuja el centroide en rojo
 
-    // Dibujar las líneas desde el centroide hasta cada vértice
+    // Dibujar el centroide en rojo
+    ctx.fillStyle = 'red';
+    ctx.fillRect(cx - 3, cy - 3, 6, 6); // Dibujar un pequeño cuadrado para el centroide
+
+    // Dibujar las líneas desde el centroide hasta cada vértice en verde
     puntos.forEach(([x, y]) => {
-        algoritmoBresenham(cx, cy, x, y, ctx); // Líneas desde el centroide a cada vértice
+        algoritmoBresenham(cx, cy, x, y, ctx, 'green');
     });
 }
 
@@ -100,9 +114,9 @@ function generarFigura() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
-    const puntos = generarPuntosAleatorios(3, 15);
-    const centroide = calcularCentroide(puntos);
-    const puntosOrdenados = ordenarPuntosPorAngulo(puntos, centroide);
+    puntosGenerados = generarPuntosAleatorios(3, 15);
+    centroideGenerado = calcularCentroide(puntosGenerados);
+    const puntosOrdenados = ordenarPuntosPorAngulo(puntosGenerados, centroideGenerado);
     const convexa = esFiguraConvexa(puntosOrdenados);
 
     // Dibujar la figura
@@ -112,7 +126,7 @@ function generarFigura() {
     const resultText = convexa ? "La figura es convexa." : "La figura es cóncava.";
     document.getElementById('result').textContent = resultText;
 
-    return { centroide, puntosOrdenados };
+    return { centroideGenerado, puntosOrdenados };
 }
 
 // Función para dibujar el centroide y las líneas conectándolo con los vértices
@@ -120,7 +134,12 @@ function dibujarCentroide() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     
-    dibujarCentroideYLíneas(ctx, centroide, puntosOrdenados);
+    if (puntosGenerados.length === 0 || centroideGenerado.length === 0) {
+        alert("Primero debes generar una figura.");
+        return;
+    }
+
+    dibujarCentroideYLíneas(ctx, centroideGenerado, puntosGenerados);
 }
 
 // Agregar eventos a los botones
