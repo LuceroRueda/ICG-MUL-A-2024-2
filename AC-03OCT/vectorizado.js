@@ -1,3 +1,6 @@
+let puntosOrdenados = [];  // Para almacenar los puntos ordenados globalmente
+let centroide = [];        // Para almacenar el centroide globalmente
+
 // Función para generar puntos aleatorios
 function generarPuntosAleatorios(minPuntos, maxPuntos) {
     const numPuntos = Math.floor(Math.random() * (maxPuntos - minPuntos + 1)) + minPuntos;
@@ -84,11 +87,35 @@ function dibujarFigura(svgCanvas, puntos) {
     }
 }
 
+// Función para dibujar el centroide y las líneas conectándolo con los vértices
+function dibujarCentroideYLíneas(svgCanvas, centroide, puntos) {
+    // Dibujar el centroide
+    const [cx, cy] = centroide;
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+    circle.setAttribute('cx', cx);
+    circle.setAttribute('cy', cy);
+    circle.setAttribute('r', 5);
+    circle.setAttribute('fill', 'red');
+    svgCanvas.appendChild(circle);
+
+    // Dibujar las líneas desde el centroide hasta cada vértice
+    puntos.forEach(([x, y]) => {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+        line.setAttribute('x1', cx);
+        line.setAttribute('y1', cy);
+        line.setAttribute('x2', x);
+        line.setAttribute('y2', y);
+        line.setAttribute('stroke', 'green');
+        line.setAttribute('stroke-width', 1);
+        svgCanvas.appendChild(line);
+    });
+}
+
 // Función para generar y mostrar una figura aleatoria
 function generarFigura() {
     const puntos = generarPuntosAleatorios(3, 15);
-    const centroide = calcularCentroide(puntos);
-    const puntosOrdenados = ordenarPuntosPorAngulo(puntos, centroide);
+    centroide = calcularCentroide(puntos);
+    puntosOrdenados = ordenarPuntosPorAngulo(puntos, centroide);
     const convexa = esFiguraConvexa(puntosOrdenados);
 
     // Dibujar la figura
@@ -96,9 +123,17 @@ function generarFigura() {
     dibujarFigura(svgCanvas, puntosOrdenados);
 
     // Mostrar el resultado en el HTML
-    const resultText = convexa ? "La figura es convexa." : "La figura no es convexa.";
+    const resultText = convexa ? "La figura es convexa." : "La figura es cóncava.";
     document.getElementById('result').textContent = resultText;
 }
 
-// Agregar evento al botón para generar figuras
+// Función para dibujar el centroide y las líneas conectándolo con los vértices
+function dibujarCentroide() {
+    const svgCanvas = document.getElementById('svgCanvas');
+    dibujarCentroideYLíneas(svgCanvas, centroide, puntosOrdenados);
+}
+
+// Agregar eventos a los botones
 document.getElementById('generate').addEventListener('click', generarFigura);
+document.getElementById('drawCentroid').addEventListener('click', dibujarCentroide);
+
